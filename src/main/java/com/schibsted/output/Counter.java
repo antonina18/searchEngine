@@ -1,9 +1,6 @@
 package com.schibsted.output;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.Arrays.stream;
@@ -12,9 +9,9 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Counter {
 
-    private final Map<String, Set<String>> wordsDepot;
+    private final Map<String, String> wordsDepot;
 
-    public Counter(Map<String, Set<String>> wordsDepot) {
+    public Counter(Map<String, String> wordsDepot) {
         this.wordsDepot = wordsDepot;
     }
 
@@ -25,8 +22,8 @@ public class Counter {
                 .map(String::toUpperCase)
                 .map(wordsDepot::get)
                 .filter(Objects::nonNull)
-                .filter(set -> !set.isEmpty())
-                .flatMap(Collection::stream)
+                .map(concatFiles -> concatFiles.split("\\|"))
+                .flatMap(Arrays::stream)
                 .collect(groupingBy(Function.identity(), counting()))
                 .entrySet()
                 .stream()
@@ -35,4 +32,6 @@ public class Counter {
                 .forEach(element ->
                         System.out.println(element.getKey() + " : " + ((float) element.getValue() / size) * 100 + "%"));
     }
+
+
 }

@@ -26,7 +26,7 @@ public class SearchEngineTest {
         Integer expected = 0;
 
         //when
-        Map<String, Set<String>> actual = searchEngine.search();
+        Map<String, String> actual = searchEngine.search();
 
         assertThat(actual.size(), is(equalTo(expected)));
 
@@ -42,7 +42,7 @@ public class SearchEngineTest {
         Integer expected = 4;
 
         //when
-        Map<String, Set<String>> actual = searchEngine.search();
+        Map<String, String> actual = searchEngine.search();
 
         assertThat(actual.size(), is(equalTo(expected)));
 
@@ -57,7 +57,7 @@ public class SearchEngineTest {
         Integer expected = 2;
 
         //when
-        Map<String, Set<String>> actual = searchEngine.search();
+        Map<String, String> actual = searchEngine.search();
 
         assertThat(actual.size(), is(equalTo(expected)));
 
@@ -72,7 +72,7 @@ public class SearchEngineTest {
         Integer expected = 2;
 
         //when
-        Map<String, Set<String>> actual = searchEngine.search();
+        Map<String, String> actual = searchEngine.search();
 
         assertThat(actual.size(), is(equalTo(expected)));
 

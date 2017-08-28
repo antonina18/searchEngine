@@ -16,17 +16,15 @@ import static org.junit.Assert.assertThat;
 public class CounterTest {
 
     private Counter counter;
-    Map<String, Set<String>> wordsDepot;
+    Map<String, String> wordsDepot;
 
     @Test
     public void shouldNotDisplayAnything() throws Exception {
         //given
         String expected = "";
         String fileName = "cherry.txt";
-        Set<String> file = new HashSet<>();
-        file.add(fileName);
         wordsDepot = new HashMap<>();
-        wordsDepot.put("CHERRY", file);
+        wordsDepot.put("CHERRY", fileName);
         ByteArrayOutputStream actual = new ByteArrayOutputStream();
         System.setOut(new PrintStream(actual));
         counter = new Counter(wordsDepot);
@@ -44,10 +42,8 @@ public class CounterTest {
         //given
         String expected = "cherry.txt : 66.66667%\n";
         String fileName = "cherry.txt";
-        Set<String> file = new HashSet<>();
-        file.add(fileName);
         wordsDepot = new HashMap<>();
-        wordsDepot.put("CHERRY", file);
+        wordsDepot.put("CHERRY", fileName);
         ByteArrayOutputStream actual = new ByteArrayOutputStream();
         System.setOut(new PrintStream(actual));
         counter = new Counter(wordsDepot);
