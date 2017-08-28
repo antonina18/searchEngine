@@ -5,7 +5,6 @@ import com.schibsted.search.SearchEngine;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Main {
 
@@ -14,7 +13,7 @@ public class Main {
             throw new IllegalArgumentException("No directory given to index");
         }
         String path = args[0];
-        Map<String, Set<String>> wordsDepot = new SearchEngine(path).search();
+        Map<String, String> wordsDepot = new SearchEngine(path).search();
         Counter counter = new Counter(wordsDepot);
         runInteractiveConsole(counter);
     }

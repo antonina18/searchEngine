@@ -19,18 +19,25 @@ public class SearchEngine {
         this.path = path;
     }
 
-    public Map<String, Set<String>> search() {
+    public Map<String, String> search() {
         try {
             return Files.walk(Paths.get(path))
                     .filter(file -> !Files.isDirectory(file))
                     .map(this::transformToWordsInFile)
                     .flatMap(Collection::stream)
                     .filter(element -> !element.getValue().isEmpty())
-                    .collect(toMap(WordInFile::getValue, WordInFile::getFiles, this::addUp));
+                    .collect(toMap(WordInFile::getValue, WordInFile::getFile, this::concat));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new HashMap<>();
+    }
+
+    private String concat(String oldValue, String newValue) {
+        if (oldValue.contains(newValue)) {
+            return oldValue;
+        }
+        return oldValue + "\\|" + newValue;
     }
 
     private List<WordInFile> transformToWordsInFile(Path path) {
@@ -39,7 +46,7 @@ public class SearchEngine {
             return stream
                     .flatMap(content -> Arrays.stream(content.split("\\W+")))
                     .map(String::toUpperCase)
-                    .map(word -> new WordInFile(word, asSet(filename)))
+                    .map(word -> new WordInFile(word, filename))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,30 +54,21 @@ public class SearchEngine {
         return new ArrayList<>();
     }
 
-    private Set<String> asSet(String filename) {
-        return Stream.of(filename).collect(Collectors.toSet());
-    }
-
-    private Set addUp(Set oldValue, Set newValue) {
-        oldValue.addAll(newValue);
-        return oldValue;
-    }
-
     private class WordInFile {
         private String value;
-        private Set<String> files;
+        private String file;
 
-        WordInFile(String value, Set<String> files) {
+        WordInFile(String value, String file) {
             this.value = value;
-            this.files = files;
+            this.file = file;
         }
 
         String getValue() {
             return value;
         }
 
-        Set<String> getFiles() {
-            return files;
+        String getFile() {
+            return file;
         }
     }
 }
