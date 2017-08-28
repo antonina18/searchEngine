@@ -25,6 +25,7 @@ public class SearchEngine {
                     .filter(file -> !Files.isDirectory(file))
                     .map(this::transformToWordsInFile)
                     .flatMap(Collection::stream)
+                    .filter(element -> !element.getValue().isEmpty())
                     .collect(toMap(WordInFile::getValue, WordInFile::getFiles, this::addUp));
         } catch (IOException e) {
             e.printStackTrace();
