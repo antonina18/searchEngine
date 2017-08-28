@@ -54,7 +54,7 @@ public class SearchEngineTest {
         Path path = Paths.get(ClassLoader.getSystemResource("cherry2.txt").toURI());
         String stringPath = path.toString();
         searchEngine = new SearchEngine(stringPath);
-        Integer expected = 3;
+        Integer expected = 2;
 
         //when
         Map<String, Set<String>> actual = searchEngine.search();
